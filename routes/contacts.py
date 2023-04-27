@@ -9,9 +9,11 @@ from utils.db import db # Import de coneccion a la base de datos
 contacts = Blueprint("contacts", __name__)
 
 # En vez de referirnos a app nos referimos a contacts
+
 @contacts.route("/")
 def libreta():
-    return render_template('index.html')
+    mi_libreta = Contact.query.all()
+    return render_template('index.html', libreta=mi_libreta)
 
 # Trae los datos desde el form que esta en index.html
 @contacts.route("/create", methods=['POST'])
@@ -32,8 +34,11 @@ def nuevo_contacto():
 def update():
     return "actualiza un contacto"
 
-@contacts.route("/delete")
-def delete():
+@contacts.route("/delete/<id>")
+def delete(id):
+    del_contact = Contact.query.get(id)
+    db.session.delete(del_contact)
+    db.session.commit()
     return "elimina un contacto"
 
 # Exportar blueprint al archivo de configuracion app.py

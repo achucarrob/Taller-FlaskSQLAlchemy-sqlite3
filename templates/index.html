@@ -7,3 +7,18 @@
     <button>Submit</button>
 
 </form>
+
+<div>
+    {% for i in libreta %}
+
+    <div>
+        <h1>{{i.fullname}}</h1>
+        <h1>{{i.phone}}</h1>
+        <div>
+            <a href="/update">Editar</a>
+            <a href="{{ url_for('contacts.delete', id=i.id ) }}">Eliminar</a>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
